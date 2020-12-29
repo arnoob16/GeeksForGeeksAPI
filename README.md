@@ -1,4 +1,5 @@
 <p align="center">
+    <img src = "https://media.geeksforgeeks.org/wp-content/cdn-uploads/20190710102234/download3.png">
 	<h1 align="center">Unofficial GFG API</h1>
 	<h3 align="center">An unofficial API for GeeksForGeeks for developers to make cool stuff using GFG data.</h3>
 </p>
@@ -13,13 +14,17 @@
 
 ---
 
+## Endpoints
+
+To access the API, there is only 1 endpoint, *https://geeksforgeeksapi.arnoob16.vercel.app/yourGeeksForGeeksUsername*
+
 ## How was it built:
 The API was built using Web Scraping the profile page and a server deployed on web.
 
 <p align=center>
     <img src = "https://img.shields.io/badge/-Python-3776AB?style=for-the-badge&logo=Python&logoColor=white"/>
-    <img src = "https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask"/>
-    <img src = "https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku"/>
+    <img src = "https://img.shields.io/badge/Flask-FF9800?style=for-the-badge&logo=flask"/>
+    <img src = "https://img.shields.io/badge/Vercel-008080?style=for-the-badge&logo=vercel"/>
 </p>
 
 ---
@@ -125,8 +130,12 @@ The API was built using Web Scraping the profile page and a server deployed on w
 ```
 ---
 
+#### Notes
+
+- If you are using this, do mention about this repository in your readme, I'll also mention your project here in this repository.
+- A star to the repository would be massive boost to a NOOB like me.
+
 
 <p align=center>
 <img src="https://forthebadge.com/images/badges/built-with-love.svg"/>
-<h3 align=center> Arnab Deep </h3>
 </p>
