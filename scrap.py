@@ -78,18 +78,23 @@ def fetchResponse(username):
             solvedStats["hard"]["questions"] = []
 
         generalInfo = {}
-        mdlGrids = soup.select(".userMainDiv > .mdl-grid")
-        noOfMdlGrids = len(mdlGrids)
-        generalInfo["name"] = mdlGrids[0].text[6:mdlGrids[0].text.index("\n", 6)]
-        generalInfo["username"] = username
-        generalInfo["institution"] = soup.select("#detail1 .mdl-grid a")[0].text
-        generalInfo["instituteRank"] = int(mdlGrids[2].text[mdlGrids[2].text.index("#")+1:])
-        generalInfo["solved"] = int(solvedStats["school"]["count"]) + int(solvedStats["basic"]["count"]) + int(solvedStats["easy"]["count"]) + int(solvedStats["medium"]["count"]) + int(solvedStats["hard"]["count"])
-        generalInfo["codingScore"] = int(mdlGrids[noOfMdlGrids - 3].text.strip()[mdlGrids[noOfMdlGrids - 3].text.index(":")+1:mdlGrids[noOfMdlGrids - 3].text.index("P")-2])
-        generalInfo["monthlyCodingScore"] = int(mdlGrids[noOfMdlGrids - 2].text.strip()[mdlGrids[noOfMdlGrids - 2].text.index(":")+1:mdlGrids[noOfMdlGrids - 2].text.index("W")-2])
-        generalInfo["weeklyCodingScore"] = int(mdlGrids[noOfMdlGrids - 2].text.strip()[mdlGrids[noOfMdlGrids - 2].text.index("W"):][mdlGrids[noOfMdlGrids - 2].text.strip()[mdlGrids[noOfMdlGrids - 2].text.index("W"):].index(":")+1:])
-        response["info"] = generalInfo
-        response["solvedStats"] = solvedStats
+        
+        try:
+            mdlGrids = soup.select(".userMainDiv > .mdl-grid")
+            noOfMdlGrids = len(mdlGrids)
+            generalInfo["name"] = mdlGrids[0].text[6:mdlGrids[0].text.index("\n", 6)]
+            generalInfo["username"] = username
+            generalInfo["institution"] = soup.select("#detail1 .mdl-grid a")[0].text
+            generalInfo["instituteRank"] = int(mdlGrids[2].text[mdlGrids[2].text.index("#")+1:])
+            generalInfo["solved"] = int(solvedStats["school"]["count"]) + int(solvedStats["basic"]["count"]) + int(solvedStats["easy"]["count"]) + int(solvedStats["medium"]["count"]) + int(solvedStats["hard"]["count"])
+            generalInfo["codingScore"] = int(mdlGrids[noOfMdlGrids - 3].text.strip()[mdlGrids[noOfMdlGrids - 3].text.index(":")+1:mdlGrids[noOfMdlGrids - 3].text.index("P")-2])
+            generalInfo["monthlyCodingScore"] = int(mdlGrids[noOfMdlGrids - 2].text.strip()[mdlGrids[noOfMdlGrids - 2].text.index(":")+1:mdlGrids[noOfMdlGrids - 2].text.index("W")-2])
+            generalInfo["weeklyCodingScore"] = int(mdlGrids[noOfMdlGrids - 2].text.strip()[mdlGrids[noOfMdlGrids - 2].text.index("W"):][mdlGrids[noOfMdlGrids - 2].text.strip()[mdlGrids[noOfMdlGrids - 2].text.index("W"):].index(":")+1:])
+            response["info"] = generalInfo
+            response["solvedStats"] = solvedStats
+        except:
+            return {"error" : "Profile Not Found"}
+
         return response
     else:
-        return profilePage.status_code
+        return {"error" : "Profile Not Found"}
