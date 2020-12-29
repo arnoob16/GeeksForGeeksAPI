@@ -16,7 +16,9 @@
 
 ## Endpoints
 
-To access the API, there is only 1 endpoint, *https://geeksforgeeksapi.arnoob16.vercel.app/yourGeeksForGeeksUsername*
+To access the API, there is only 1 endpoint, *https://geeks-for-geeks-api.vercel.app/yourGeeksForGeeksUsername*
+
+`Sample URL` - https://geeks-for-geeks-api.vercel.app/arnoob16
 
 ## How was it built:
 The API was built using Web Scraping the profile page and a server deployed on web.
