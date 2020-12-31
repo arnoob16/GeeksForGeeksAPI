@@ -4,6 +4,11 @@
 	<h3 align="center">An unofficial API for GeeksForGeeks for developers to make cool stuff using GFG data.</h3>
 </p>
 
+<p align="center">
+<img src="https://img.shields.io/github/issues-closed/arnoob16/GeeksForGeeksAPI?style=for-the-badge">
+<img src="https://img.shields.io/github/issues-pr-closed/arnoob16/GeeksForGeeksAPI?color=green&style=for-the-badge">
+</p>
+
 ---
 
 ## Functionalities
