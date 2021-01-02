@@ -45,8 +45,8 @@ The API was built using Web Scraping the profile page and a server deployed on w
     ``` pip install requirements.txt ```
 
 * Directions to execute
-    - ``` python server.py``` or ``` py server.py```
-    - Open the browser of your choice and visit your localhost, *http://127.0.0.1:5000/yourGeeksForGeeksUsername*
+    - ``` python app.py``` or ``` py app.py```
+    - Open the browser of your choice and visit your localhost, either *http://127.0.0.1:5000/yourGeeksForGeeksUsername* or *http://localhost:5000/yourGeeksForGeeksUsername*
     - See the API Response, understand it and build something with it.
 
 ---
