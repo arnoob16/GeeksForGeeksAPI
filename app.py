@@ -14,7 +14,8 @@ api.add_resource(geeksforgeeksAPI, "/<string:username>")
 
 @app.route("/")
 def default_redirect():
-    return redirect("https://github.com/arnoob16/GeeksForGeeksAPI/", code=301)
+    url = "https://github.com/arnoob16/GeeksForGeeksAPI/"
+    return redirect(url, code=301)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
