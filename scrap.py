@@ -1,9 +1,14 @@
 from bs4 import BeautifulSoup as bs
+from flask import request, redirect
+
 import requests, json
 
 def fetchResponse(username):
     url = 'https://auth.geeksforgeeks.org/user/{}/practice/'.format(username)
     profilePage = requests.get(url)
+
+    if request.path == '/':
+        return redirect("https://github.com/arnoob16/GeeksForGeeksAPI/", code=302)
 
     if profilePage.status_code == 200:
         soup = bs(profilePage.content, 'html.parser')
