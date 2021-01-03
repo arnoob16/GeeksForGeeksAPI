@@ -3,6 +3,11 @@ from flask_restful import Api, Resource
 import scrap
 
 app = Flask(__name__)
+
+@app.route("/")
+def default_redirect():
+    return redirect("http://github.com/arnoob16/GeeksForGeeksAPI/")
+
 api = Api(app)
 
 # class geeksforgeeksAPI(Resource):
@@ -11,10 +16,6 @@ api = Api(app)
 #
 #
 # api.add_resource(geeksforgeeksAPI, "/<string:username>")
-
-@app.route("/")
-def default_redirect():
-    return redirect("http://github.com/arnoob16/GeeksForGeeksAPI/")
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
