@@ -14,7 +14,7 @@ api.add_resource(geeksforgeeksAPI, "/<string:username>")
 
 @app.route("/")
 def default_redirect():
-    url = "https://github.com/arnoob16/GeeksForGeeksAPI/"
+    url = "http://github.com/arnoob16/GeeksForGeeksAPI/"
     return redirect(url, code=301)
 
 if __name__ == "__main__":
