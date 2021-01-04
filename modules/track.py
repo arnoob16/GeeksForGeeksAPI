@@ -1,6 +1,5 @@
 from flask import json
 from .scrap import scrap
-import os
 
 class track():
 
@@ -21,8 +20,7 @@ class track():
                     links.append(link)
                     details.append((key, i))
 
-            file = os.path.join("..","ques.json")
-            with open(file, 'r') as file:
+            with open("ques.json", 'r') as file:
                 babbar = json.loads(file.read())
 
             for key in babbar.keys():
