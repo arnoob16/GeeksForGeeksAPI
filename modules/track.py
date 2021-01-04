@@ -1,5 +1,6 @@
-from flask import json
+import json
 from .scrap import scrap
+from collections import OrderedDict
 
 class track():
 
@@ -8,8 +9,7 @@ class track():
     
     def solve(self):
         scrapper = scrap(self.user)
-        data = scrapper.fetchResponse()
-
+        data = OrderedDict(scrapper.fetchResponse())
         if(data != {"error" : "Profile Not Found"}):
             details = []
             links = []
@@ -38,7 +38,7 @@ class track():
                 if(link in babbar_link[0]):
                     detail = details[i]
                     data['solvedStats'][detail[0]]['questions'][detail[1]]['fromBabbar450Sheet'] = True
-
+                    
             return data
         
         else:

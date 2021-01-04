@@ -1,4 +1,5 @@
-from flask import Flask, json, current_app
+from flask import Flask, current_app
+import json
 from flask_restful import Api, Resource
 from modules.track import track
 
