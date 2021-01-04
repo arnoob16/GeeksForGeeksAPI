@@ -37,7 +37,7 @@ class track():
             for i, link in enumerate(links):
                 if(link in babbar_link[0]):
                     detail = details[i]
-                    data['solvedStats'][detail[0]]['questions'][detail[1]]['status'] = True
+                    data['solvedStats'][detail[0]]['questions'][detail[1]]['fromBabbar450Sheet'] = True
 
             return data
         
