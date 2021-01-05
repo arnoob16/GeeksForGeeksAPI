@@ -1,4 +1,4 @@
-from flask import Flask, redirect
+from flask import Flask, redirect, request
 from flask_restful import Api, Resource
 import scrap
 
@@ -7,7 +7,10 @@ api = Api(app)
 
 class geeksforgeeksAPI(Resource):
     def get(self, username=""):
-        return scrap.fetchResponse(username)
+        if request.path == '/':
+            return redirect("https://github.com/arnoob16/GeeksForGeeksAPI/", code=302)
+        else:
+            return scrap.fetchResponse(username)
 
 
 api.add_resource(geeksforgeeksAPI, "/", "/<string:username>")
