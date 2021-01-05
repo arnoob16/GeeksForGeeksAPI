@@ -6,6 +6,7 @@
         "use": "@liudonghua123/now-flask"
     }],
     "routes": [
-        { "src": "(.*)", "dest": "app.py" }
+        { "src": "(.*)", "dest": "app.py" },
+        { "src": "/", "dest": "https://github.com/arnoob16/GeeksForGeeksAPI/"}
     ]
 }

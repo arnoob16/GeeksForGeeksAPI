@@ -1,4 +1,6 @@
 from bs4 import BeautifulSoup as bs
+from flask import request, redirect, jsonify
+
 import requests, json
 
 def fetchResponse(username):
