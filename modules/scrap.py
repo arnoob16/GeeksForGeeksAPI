@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup as bs
 import requests
+import re
 
 class scrap():
 
@@ -84,21 +85,40 @@ class scrap():
 
             generalInfo = {}
 
+            def extract_detail(key, soup):
+                try:
+                    return next(filter(
+                        lambda div: key.lower() in div.text.lower(),
+                        soup.select(".userMainDiv > div")
+                    )).select_one("div:nth-child(2)").text.strip()
+                except Exception:
+                    return ""
+
+            def extract_num(query, soup):
+                try:
+                    tag = soup.find_all(lambda tag: query.lower() in tag.text.lower() and list(
+                        tag.select("div")) == [])[0]
+                    return re.search(r'\d+', tag.text).group()
+                except Exception:
+                    return ""
+
+            generalInfo["name"] = extract_detail("Name", soup)
+            generalInfo["username"] = self.username
+            generalInfo["institution"] = extract_detail("Institution", soup)
             try:
-                mdlGrids = soup.select(".userMainDiv > .mdl-grid")
-                noOfMdlGrids = len(mdlGrids)
-                generalInfo["name"] = mdlGrids[0].text[6:mdlGrids[0].text.index("\n", 6)]
-                generalInfo["username"] = self.username
-                generalInfo["institution"] = soup.select("#detail1 .mdl-grid a")[0].text
-                generalInfo["instituteRank"] = int(mdlGrids[2].text[mdlGrids[2].text.index("#")+1:])
-                generalInfo["solved"] = int(solvedStats["school"]["count"]) + int(solvedStats["basic"]["count"]) + int(solvedStats["easy"]["count"]) + int(solvedStats["medium"]["count"]) + int(solvedStats["hard"]["count"])
-                generalInfo["codingScore"] = int(mdlGrids[noOfMdlGrids - 3].text.strip()[mdlGrids[noOfMdlGrids - 3].text.index(":")+1:mdlGrids[noOfMdlGrids - 3].text.index("P")-2])
-                generalInfo["monthlyCodingScore"] = int(mdlGrids[noOfMdlGrids - 2].text.strip()[mdlGrids[noOfMdlGrids - 2].text.index(":")+1:mdlGrids[noOfMdlGrids - 2].text.index("W")-2])
-                generalInfo["weeklyCodingScore"] = int(mdlGrids[noOfMdlGrids - 2].text.strip()[mdlGrids[noOfMdlGrids - 2].text.index("W"):][mdlGrids[noOfMdlGrids - 2].text.strip()[mdlGrids[noOfMdlGrids - 2].text.index("W"):].index(":")+1:])
-                response["info"] = generalInfo
-                response["solvedStats"] = solvedStats
-            except:
-                return {"error" : "Profile Not Found"}
+                generalInfo["instituteRank"] = re.search(r'\d+', extract_detail(
+                    "Rank in Institute", soup)).group()
+            except Exception:
+                generalInfo["instituteRank"] = ""
+            generalInfo["solved"] = extract_num("Problems Solved", soup)
+            generalInfo["codingScore"] = extract_num(
+                "Overall Coding Score", soup)
+            generalInfo["monthlyCodingScore"] = extract_num(
+                "Monthly Coding Score", soup)
+            generalInfo["weeklyCodingScore"] = extract_num(
+                "Weekly Coding Score", soup)
+            response["info"] = generalInfo
+            response["solvedStats"] = solvedStats
 
             return response
         else:
