@@ -122,4 +122,4 @@ class scrap():
 
             return response
         else:
-            return {"error" : "Profile GFG NOt Found"}
+            return {"error" : " The Profile GFG NOt Found"}
