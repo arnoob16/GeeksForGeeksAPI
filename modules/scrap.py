@@ -8,7 +8,7 @@ class scrap():
         self.username = username
     
     def fetchResponse(self):
-        url = 'https://auth.geeksforgeeks.org/user/{}/'.format(self.username)
+        url = 'https://auth.geeksforgeeks.org/user/{}/practice'.format(self.username)
         profilePage = requests.get(url)
 
         if profilePage.status_code == 200:
