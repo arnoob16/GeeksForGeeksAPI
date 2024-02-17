@@ -3,7 +3,8 @@
     "version":2,
     "builds": [{
         "src": "*py",
-        "use": "@liudonghua123/now-flask"
+        "use": "@liudonghua123/now-flask",
+        "config": { "output": "public" }
     }],
     "routes": [
         { "src": "(.*)", "dest": "app.py" }
