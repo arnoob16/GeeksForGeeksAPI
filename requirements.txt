@@ -1,4 +1,4 @@
-requests==2.24.0
-Flask==1.1.2
-Flask_RESTful==0.3.8
-beautifulsoup4==4.9.3
+requests==2.31.0
+Flask==2.3.1
+Flask_RESTful==0.3.10
+beautifulsoup4==4.12.3

@@ -1,7 +1,7 @@
 <p align="center">
     <img src = "https://media.geeksforgeeks.org/wp-content/cdn-uploads/20190710102234/download3.png">
 	<h1 align="center">Unofficial GFG API</h1>
-	<h3 align="center">An unofficial API for GeeksForGeeks for developers to make cool stuff using GFG data.</h3>
+	<h3 align="center">An unofficial API for GeeksForGeeks for developers to make cool stuff using GFG profile data.</h3>
 </p>
 
 <p align="center">
@@ -56,72 +56,49 @@ The API was built using Web Scraping the profile page and a server deployed on w
 ```
 {
     "info": {
-        "name": "Arnab Deep",
-        "username": "arnoob16",
-        "institution": "SRM Institute of Science and Technology",
-        "instituteRank": 62,
-        "solved": 84,
-        "codingScore": 190,
-        "monthlyCodingScore": 4,
-        "weeklyCodingScore": 0
+        "userName": "arnoob16",
+        "profilePicture": "https://media.geeksforgeeks.org/img-practice/user_web-1598433228.svg",
+        "instituteRank": "415",
+        "currentStreak": "00",
+        "maxStreak": "929",
+        "institution": "SRM Institute of Science and Technology ",
+        "languagesUsed": "Java, C++, Python",
+        "codingScore": "224",
+        "totalProblemsSolved": "95",
+        "monthlyCodingScore": ""
     },
     "solvedStats": {
         "school": {
-            "count": "0",
+            "count": 0,
             "questions": []
         },
         "basic": {
-            "count": "17",
+            "count": 16,
             "questions": [
                 {
-                    "question": "Height of Binary Tree",
-                    "link": "https://practice.geeksforgeeks.org/problems/height-of-binary-tree/1"
+                    "question": "Cyclically rotate an array by one",
+                    "questionUrl": "https://practice.geeksforgeeks.org/problems/cyclically-rotate-an-array-by-one2614/0"
                 },
                 {
-                    "question": "Reverse a String",
-                    "link": "https://practice.geeksforgeeks.org/problems/reverse-a-string/1"
-                },
-                ....
-            ]
-        },
-        "easy": {
-            "count": "49",
-            "questions": [
-                {
-                    "question": "Deque Implementations",
-                    "link": "https://practice.geeksforgeeks.org/problems/deque-implementations/1"
+                    "question": "Union of two arrays",
+                    "questionUrl": "https://practice.geeksforgeeks.org/problems/union-of-two-arrays3538/0"
                 },
                 {
-                    "question": "The New Line - Java",
-                    "link": "https://practice.geeksforgeeks.org/problems/the-new-line-java/1"
-                },
-                ....
-            ]
-        },
-        "medium": {
-            "count": "16",
-            "questions": [
-                {
-                    "question": " Rearrange Array Alternately",
-                    "link": "https://practice.geeksforgeeks.org/problems/-rearrange-array-alternately-1587115620/1"
-                },
-                {
-                    "question": "Part of it.",
-                    "link": "https://practice.geeksforgeeks.org/problems/part-of-it1016/1"
-                },
-                ....
+                    "question": "Middle of Three",
+                    "questionUrl": "https://practice.geeksforgeeks.org/problems/middle-of-three2926/0"
+                }
             ]
         },
         "hard": {
-            "count": "2",
+            "count": 2,
             "questions": [
                 {
-                    "question": "QuickSort on Doubly Linked List",
-                    "link": "https://practice.geeksforgeeks.org/problems/quicksort-on-doubly-linked-list/1"
+                    "question": "Merge Without Extra Space",
+                    "questionUrl": "https://practice.geeksforgeeks.org/problems/merge-two-sorted-arrays5135/0"
                 },
                 {
                     "question": "Return two prime numbers",
-                    "link": "https://practice.geeksforgeeks.org/problems/return-two-prime-numbers2509/1"
+                    "questionUrl": "https://practice.geeksforgeeks.org/problems/return-two-prime-numbers2509/0"
                 }
             ]
         }
