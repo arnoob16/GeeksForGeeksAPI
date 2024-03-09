@@ -26,7 +26,7 @@ class scrap():
 
         def extract_details(soup):
             basic_details_by_index = ["institution", "languagesUsed"]
-            coding_scores_by_index = ["codingScore", "totalProblemsSolved", "monthlyCodingScore"]
+            coding_scores_by_index = ["codingScore", "totalProblemsSolved", "monthlyCodingScore", "articlesPublished"]
             basic_details = soup.find_all("div", class_ = "basic_details_data")
             coding_scores = soup.find_all("span", class_ = "score_card_value")
             response = {}
