@@ -23,12 +23,34 @@ class scrap():
                     result[element_keys[index]] = ""
                 index += 1
             return result
+        
+        def get_inner_text_list(element_list):
+            result = []
+            for element in element_list:
+                try:
+                    text = element.text
+                    result.append(text.replace(" ", "_").lower())
+                except:
+                    result.append("")
+            return result
+
 
         def extract_details(soup):
-            basic_details_by_index = ["institution", "languagesUsed"]
-            coding_scores_by_index = ["codingScore", "totalProblemsSolved", "monthlyCodingScore", "articlesPublished"]
+            # basic_details_by_index = ["institution", "languagesUsed"]
+            # coding_scores_by_index = ["codingScore", "totalProblemsSolved", "monthlyCodingScore", "articlesPublished"]
+            
+            ## Get the elemets with details and score names
+            basic_details_names = soup.find_all("div", class_ = "basic_details_name")
+            score_card_names = soup.find_all("span", class_ = "score_card_name")
+
+            ## Get the inner text list of the elements
+            basic_details_by_index = get_inner_text_list(basic_details_names)
+            coding_scores_by_index = get_inner_text_list(score_card_names)
+
+            ## Get the elements with details and score values
             basic_details = soup.find_all("div", class_ = "basic_details_data")
             coding_scores = soup.find_all("span", class_ = "score_card_value")
+            
             response = {}
             response["basic_details"] = extract_text_from_elements(basic_details, basic_details_by_index)
             response["coding_scores"] = extract_text_from_elements(coding_scores, coding_scores_by_index)
