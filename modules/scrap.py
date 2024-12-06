@@ -54,6 +54,16 @@ class scrap():
                     result[cat_name]["count"] = cat_count
 
 
+            response = requests.post("https://practiceapi.geeksforgeeks.org/api/v1/user/problems/submissions/", json={"handle":self.username,"requestType":"","year":"","month":""})
+            submission_data = response.json()
+
+            for level in submission_data['result']:
+                for ques in submission_data['result'][level]:
+                    url = "https://www.geeksforgeeks.org/problems/{}/0" .format(submission_data['result'][level][ques]['slug'])
+                    pname = submission_data['result'][level][ques]['pname']
+
+                    result[level.lower()]['questions'].append({"question": pname, "questionUrl": url})
+
             return result
 
 
