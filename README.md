@@ -42,7 +42,7 @@ The API was built using Web Scraping the profile page and a server deployed on w
 	- Python 3.x
     - Install all the required libraries using the *requirements.txt* file. 
     
-    ``` pip install requirements.txt ```
+    ``` pip install -r requirements.txt ```
 
 * Directions to execute
     - ``` python app.py``` or ``` py app.py```

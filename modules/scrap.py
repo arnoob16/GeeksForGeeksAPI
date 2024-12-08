@@ -29,9 +29,24 @@ class scrap():
             coding_scores_by_index = ["codingScore", "totalProblemsSolved", "monthlyCodingScore", "articlesPublished"]
             basic_details = soup.find_all("div", class_ = "basic_details_data")
             coding_scores = soup.find_all("span", class_ = "score_card_value")
+
+            score_divs = soup.find_all('div', class_='scoreCard_head_left--score__oSi_x')
+            all_div_values = [div.get_text(strip=True) for div in score_divs]
+            if len(all_div_values) > 2 and all_div_values[2] == "__":
+                all_div_values[2] = "N/A"
+
+            gfgrating = all_div_values[2] if len(all_div_values) > 2 else 'N/A'
+
+            # Convert gfgrating to int: if it's "N/A", set to 0; otherwise, convert to an integer
+            gfgrating = 0 if gfgrating == "N/A" else int(gfgrating)
+
+
+
+
             response = {}
             response["basic_details"] = extract_text_from_elements(basic_details, basic_details_by_index)
             response["coding_scores"] = extract_text_from_elements(coding_scores, coding_scores_by_index)
+            response["gfgrating"] = gfgrating
             return response 
             
         def extract_questions_by_difficulty(soup, difficulty):
@@ -97,8 +112,11 @@ class scrap():
             question_count_details = extract_questions_solved_count(soup)
             
             for _ , value in additional_details.items():
-                for _key, _value in value.items():
-                    generalInfo[_key] = _value
+                if isinstance(value, dict):  # Only attempt to use .items() on dictionaries
+                    for _key, _value in value.items():
+                        generalInfo[_key] = _value
+                else:  # Handle the case where value is a string (or other non-dict)
+                    generalInfo[_] = value
 
             for key, value in question_count_details.items():
                 solvedStats[key.replace("#", "")] = value
