@@ -1,110 +1,65 @@
-from bs4 import BeautifulSoup as bs
 import requests
-import re
+import json
+from bs4 import BeautifulSoup as bs
 
 class scrap():
     def __init__(self, username):
         self.username = username
     
     def fetchResponse(self):
-        BASE_URL = 'https://auth.geeksforgeeks.org/user/{}/practice/'.format(self.username)
+        BASE_URL = f'https://auth.geeksforgeeks.org/user/{self.username}/practice/'
 
-        def extract_text_from_elements(elements, element_keys):
-            result = {}
-            index = 0
-            for element in elements:
-                try:
-                    inner_text = element.text
-                    if inner_text == '_ _':
-                        result[element_keys[index]] = ""
-                    else:
-                        result[element_keys[index]] = inner_text
-                except: 
-                    result[element_keys[index]] = ""
-                index += 1
-            return result
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+        }
 
-        def extract_details(soup):
-            basic_details_by_index = ["institution", "languagesUsed", "campusAmbassador"]
-            coding_scores_by_index = ["codingScore", "totalProblemsSolved", "monthlyCodingScore", "articlesPublished"]
-            basic_details = soup.find_all("div", class_ = "basic_details_data")
-            coding_scores = soup.find_all("span", class_ = "score_card_value")
-            response = {}
-            response["basic_details"] = extract_text_from_elements(basic_details, basic_details_by_index)
-            response["coding_scores"] = extract_text_from_elements(coding_scores, coding_scores_by_index)
-            return response 
-            
-        def extract_questions_by_difficulty(soup, difficulty):
-            try: 
-                response = {}
-                questions = []
-                question_list_by_difficulty_tag = soup.find("div", id = difficulty.replace("#", "")).find_all("a")
-                response["count"] = len(question_list_by_difficulty_tag)
-                
-                for question_tag in question_list_by_difficulty_tag:
-                    question = {}
-                    question["question"] = question_tag.text
-                    question["questionUrl"] = question_tag["href"]
-                    questions.append(question)
+        profilePage = requests.get(BASE_URL, headers=headers)
 
-                response["questions"] = questions
-                return response
-            except:
-                return { "count": 0, "questions": [] }
+        if profilePage.status_code != 200:
+            return {"error": "Profile Not Found"}
 
-        def extract_questions_solved_count(soup):
-            difficulties = ["#school", "#basic", "#easy", "#medium", "#hard"]
-            result = {}
-            for difficulty in difficulties:
-                result[difficulty] = extract_questions_by_difficulty(soup, difficulty)
-                
-            return result
+        soup = bs(profilePage.content, 'html.parser')
 
-        profilePage = requests.get(BASE_URL)
+        # Find the script tag containing JSON data
+        script_tag = soup.find("script", id="__NEXT_DATA__", type="application/json")
+        if not script_tag:
+            return {"error": "Could not find user data"}
 
-        if profilePage.status_code == 200:
-            response = {}
-            solvedStats = {}
-            generalInfo = {}
-            soup = bs(profilePage.content, 'html.parser')
+        # Parse the JSON data
+        try:
+            user_data = json.loads(script_tag.string)
+            user_info = user_data["props"]["pageProps"]["userInfo"]
+            user_submissions = user_data["props"]["pageProps"]["userSubmissionsInfo"]
+        except (KeyError, json.JSONDecodeError):
+            return {"error": "Failed to parse user data"}
 
-            generalInfo["userName"] = self.username
-            
-            profile_pic = soup.find("img", class_ = "profile_pic")
-            institute_rank = soup.find("span", class_ = "rankNum")
-            streak_count = soup.find("div", class_ = "streakCnt")
+        # Extract general information
+        generalInfo = {
+            "userName": self.username,
+            "fullName": user_info.get("name", ""),
+            "profilePicture": user_info.get("profile_image_url", ""),
+            "institute": user_info.get("institute_name", ""),
+            "instituteRank": user_info.get("institute_rank", ""),
+            "currentStreak": user_info.get("pod_solved_longest_streak", "00"),
+            "maxStreak": user_info.get("pod_solved_global_longest_streak", "00"),
+            "codingScore": user_info.get("score", 0),
+            "monthlyScore": user_info.get("monthly_score", 0),
+            "totalProblemsSolved": user_info.get("total_problems_solved", 0),
+        }
 
-            try:
-                generalInfo["profilePicture"] = profile_pic["src"]
-            except:
-                generalInfo["profilePicture"] = ""
+        # Extract solved questions by difficulty
+        solvedStats = {}
+        for difficulty, problems in user_submissions.items():
+            questions = [
+                {
+                    "question": details["pname"],
+                    "questionUrl": f"https://practice.geeksforgeeks.org/problems/{details['slug']}"
+                }
+                for details in problems.values()
+            ]
+            solvedStats[difficulty.lower()] = {"count": len(questions), "questions": questions}
 
-            try:
-                generalInfo["instituteRank"] = institute_rank.text
-            except:
-                generalInfo["instituteRank"] = ""
-
-            try:
-                streak_details = streak_count.text.replace(" ", "").split("/")
-                generalInfo["currentStreak"] = streak_details[0]
-                generalInfo["maxStreak"] = streak_details[1]
-            except:
-                generalInfo["currentStreak"] = "00"
-                generalInfo["maxStreak"] = "00"
-
-
-            additional_details = extract_details(soup)
-            question_count_details = extract_questions_solved_count(soup)
-            
-            for _ , value in additional_details.items():
-                for _key, _value in value.items():
-                    generalInfo[_key] = _value
-
-            for key, value in question_count_details.items():
-                solvedStats[key.replace("#", "")] = value
-
-            response["info"] = generalInfo
-            response["solvedStats"] = solvedStats
-            return response
-        else:
-            return {"error" : "Profile Not Found"}
+        return {
+            "info": generalInfo,
+            "solvedStats": solvedStats
+        }
